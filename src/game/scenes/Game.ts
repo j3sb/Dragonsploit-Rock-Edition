@@ -7,6 +7,7 @@ export class Game extends Scene {
     gameText: Phaser.GameObjects.Text;
     player: Phaser.Physics.Arcade.Sprite;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    rock: Phaser.GameObjects.Image;
 
     constructor() {
         super("Game");
@@ -39,7 +40,9 @@ export class Game extends Scene {
             .setOrigin(0.5)
             .setDepth(100);
 
-        EventBus.emit("current-scene-ready", this);
+        this.rock = this.add.image(30, 30, 'logo').setDepth(100);
+
+        EventBus.emit('current-scene-ready', this);
     }
 
     update() {
