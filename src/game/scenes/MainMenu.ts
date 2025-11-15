@@ -12,7 +12,7 @@ export class MainMenu extends Scene {
 
     create() {
         this.background = this.add.image(512, 384, "menu-bg");
-
+        this.sound.play("menu-music", { loop: true });
         this.title = this.add
             .text(512, 460, "Click to Start", {
                 fontFamily: "Arial Black",
@@ -30,15 +30,11 @@ export class MainMenu extends Scene {
             this.changeScene();
         });
 
-        this.title.setInteractive();
-        this.title.on("pointerdown", () => {
-            this.changeScene();
-        });
-
         EventBus.emit("current-scene-ready", this);
     }
 
     changeScene() {
+        this.sound.stopByKey("menu-music");
         this.scene.start("Game");
     }
 }

@@ -8,7 +8,7 @@ import Thrower from "../../Thrower";
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
-    gameText: Phaser.GameObjects.Text;
+    rocksText: Phaser.GameObjects.Text;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     rock: Granite;
     // floor: Phaser.Physics.Arcade.
@@ -16,6 +16,20 @@ export class Game extends Scene {
     platforms: Phaser.Physics.Arcade.StaticGroup; // ground so that the stones can dissapear
     dragon: Dragon;
     throwers: Thrower[];
+    private rocks: integer; // the number of rocks you own
+
+    public addRocks(i: integer) {
+        this.rocks += i;
+        this.showRocks();
+    }
+
+    public getRocks() {
+        return this.rocks;
+    }
+
+    public showRocks() {
+        this.rocksText.setText("number of rocks: " + this.rocks);
+    }
 
     constructor() {
         super("Game");
@@ -25,26 +39,29 @@ export class Game extends Scene {
         this.camera = this.cameras.main;
 
         this.throwers = [];
+        this.rocks = 1;
 
         this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
+
+        this.sound.play("game-music", { loop: true, volume: 0.1 });
 
         // if (this.input.keyboard)
         // this.cursors = this.input.keyboard.createCursorKeys();
 
         this.tower = new Castle(this);
 
-        // this.gameText = this.add
-        //     .text(512, 384, "DRAGONSPLOIT", {
-        //         fontFamily: "Arial Black",
-        //         fontSize: 38,
-        //         color: "#ffffff",
-        //         stroke: "#000000",
-        //         strokeThickness: 8,
-        //         align: "center",
-        //     })
-        //     .setOrigin(0.5)
-        //     .setDepth(100);
+        this.rocksText = this.add
+            .text(512, 20, "number of rocks: " + this.rocks, {
+                fontFamily: "Arial Black",
+                fontSize: 16,
+                color: "#ffffff",
+                stroke: "#000000",
+                strokeThickness: 2,
+                align: "center",
+            })
+            .setOrigin(0.5)
+            .setDepth(100);
 
         // this.rock = new Granite(this, 1000, 600);
         // this.rock.throw(-3.14 / 1.5, 100);
@@ -74,6 +91,7 @@ export class Game extends Scene {
     }
 
     changeScene() {
+        this.sound.stopByKey("game-music");
         this.scene.start("GameOver");
     }
 }

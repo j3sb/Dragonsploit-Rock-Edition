@@ -21,55 +21,60 @@ export default class Thrower extends Phaser.GameObjects.GameObject {
         this.setIdle();
     }
 
-    public setIdle(){
+    public setIdle() {
         this.animState = "idle";
         this.image.setTexture("throweridle");
     }
 
-    public setHolding(){
+    public setHolding() {
         this.animState = "holding";
         this.image.setTexture("throwerholding");
     }
 
-    public setThrowing(){
+    public setThrowing() {
         this.animState = "throwing";
         this.image.setTexture("throwerthrowing");
     }
 
-    public isIdle(){
+    public isIdle() {
         return this.animState == "idle";
     }
 
-    public isHolding(){
+    public isHolding() {
         return this.animState == "holding";
     }
 
-    public isThrowing(){
+    public isThrowing() {
         return this.animState == "throwing";
     }
 
-    public update(){
-        if (this.animState == "idle"){
-            this.image.x += this.SPEED;
-            if (this.image.x > 700){
-                this.setHolding();
+    public update() {
+        if (this.animState == "idle") {
+            if (this.image.x > 900) {
+                if (this.gameScene.getRocks() > 0) {
+                    this.setHolding();
+                    this.gameScene.addRocks(-1);
+                }
+            } else {
+                this.image.x += this.SPEED;
             }
-        } else if(this.animState == "holding"){
+        } else if (this.animState == "holding") {
             this.image.x -= this.SPEED;
-            if(this.image.x < 500){
+            if (this.image.x < 500) {
                 this.setThrowing();
-
-                new Granite(this.gameScene, this.image.x, this.image.y).throw(-3.14 / 1.1 + Math.random() * 0.4, 200);
+                this.scene.sound.play("swoosh", { volume: 0.2 });
+                new Granite(this.gameScene, this.image.x, this.image.y).throw(
+                    -3.14 / 1.1 + Math.random() * 0.4,
+                    200
+                );
             }
-
-        }else if(this.isThrowing()){
+        } else if (this.isThrowing()) {
             this.throwTime++;
-            if (this.throwTime > 20){
+            if (this.throwTime > 20) {
                 this.throwTime = 0;
 
                 this.setIdle();
             }
         }
-
     }
 }

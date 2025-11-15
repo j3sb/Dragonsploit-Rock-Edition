@@ -22,7 +22,7 @@ export default abstract class Rock extends Phaser.GameObjects.GameObject {
 
         // scene.physics.add.collider(this.image, scene.dragon, () => { scene.dragon.damage() } );
         // destroy stone when it hist the bottom platform to avoid too much lag
-        scene.physics.add.collider(this.image, scene.platforms, () => { this.image.destroy();} );
+        scene.physics.add.collider(this.image, scene.platforms, () => { scene.addRocks(2); this.image.destroy();} );
     }
 
     public throw(angle: number, speed: number): void{
