@@ -82,6 +82,14 @@ export class Game extends Scene {
 
         // Apply to dragon (example)
         this.applyRockEffect(damage, effect, duration);
+
+        //IN CASE OF HITTING/MISSING THE DRAGON - ME
+        if(this.applyRockEffect(damage, effect, duration)) {
+            this.currency += 4;
+        }
+        else {
+            this.currency -= 2;
+        }
     }
 
     applyRockEffect(damage: number, effect: EffectType, duration: number) {
@@ -122,6 +130,10 @@ hitDragon(rock: Sapphire) {
 
     // Apply slow effect
     dragon.speed *= 0.5;  // 50% speed
+
+    //gaining currency and resetting misses - ME
+    //this.currency += 4;
+    //this.miss_count = 0;
 
     // Reset after duration
     this.time.delayedCall(rock.getDuration(), () => {

@@ -1,7 +1,8 @@
+import { Game } from "../game/scenes/Game";
 import Rock, { EffectType } from "../Rock";
 
 export default class Granite extends Rock {
-    public constructor(scene: Phaser.Scene, x: integer, y: integer) {
+    public constructor(scene: Game, x: integer, y: integer) {
         super(scene, x, y);
     }
 
@@ -11,12 +12,12 @@ export default class Granite extends Rock {
     }
 
     public getDamage(): number {
-        // Granite deals 15 damage
-        return 15;
+        // Granite deals 10 damage (lesser value than Sapphire's 20)
+        return 10;
     }
 
     public getDuration(): number {
-        // Effect lasts for 5 seconds
-        return 5000;
+        // Effect lasts for 2 seconds (lesser value than Sapphire's 3 seconds)
+        return 2000;
     }
 }

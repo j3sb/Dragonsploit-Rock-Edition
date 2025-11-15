@@ -7,11 +7,12 @@ export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
     gameText: Phaser.GameObjects.Text;
-    player: Phaser.Physics.Arcade.Sprite;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     // rock: Phaser.GameObjects.Image;
     rock: Granite;
     private dragon: Dragon;
+    // floor: Phaser.Physics.Arcade.
+    platforms: Phaser.Physics.Arcade.StaticGroup;
 
     constructor() {
         super("Game");
@@ -19,15 +20,9 @@ export class Game extends Scene {
 
     create() {
         this.camera = this.cameras.main;
-        this.camera.setBackgroundColor(0x00ff00);
 
-        this.background = this.add.image(512, 384, "background");
-        this.background.setAlpha(0.5);
+        this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
-
-        this.player = this.physics.add.sprite(512, 500, "logo");
-        this.player.setDepth(1);
-        this.player.setCollideWorldBounds(true);
 
         if (this.input.keyboard)
             this.cursors = this.input.keyboard.createCursorKeys();
@@ -49,23 +44,20 @@ export class Game extends Scene {
 
         this.dragon = new Dragon(this, 500, 350, 100);
 
+        // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
+
+        this.platforms = this.physics.add.staticGroup();
+        this.platforms
+            .create(-100, this.scale.gameSize.height - 100, "rock")
+            .setScale(1000, 1)
+            .refreshBody();
+
         EventBus.emit("current-scene-ready", this);
     }
 
     update(time: number, delta: number) {
-        this.player.setVelocity(0);
-
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-300);
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(300);
-        }
-
-        if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-300);
-        } else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(300);
-        }
+        this.rock = new Granite(this, 1000, 600);
+        this.rock.throw(-3.14 / 1.5 + Math.random() * 0.4, 100);
 
         this.dragon.update(time, delta);
     }
