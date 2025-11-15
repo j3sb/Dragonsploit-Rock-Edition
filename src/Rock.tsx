@@ -9,15 +9,19 @@ export enum EffectType {
 
 export default abstract class Rock extends Phaser.GameObjects.GameObject {
     image: Phaser.Physics.Arcade.Image;
+    scene: Phaser.Scene
 
     protected constructor(scene: Game, x: integer, y: integer) {
         super(scene, "rock");
 
+        this.scene = scene;
+
         this.image = scene.physics.add.image(x, y, 'rock').refreshBody();
-        this.image.setBounce(0.2);
+        this.image.setBounce(0.);
         this.image.setCollideWorldBounds(true);
 
-        scene.physics.add.collider(this.image, scene.platforms);
+        // destroy stone when it hist the bottom platform to avoid too much lag
+        scene.physics.add.collider(this.image, scene.platforms, () => { this.image.destroy();} );
     }
 
     public throw(angle: number, speed: number): void{

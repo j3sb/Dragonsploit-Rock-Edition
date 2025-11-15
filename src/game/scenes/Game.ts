@@ -41,7 +41,6 @@ export class Game extends Scene {
         // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
 
         this.platforms = this.physics.add.staticGroup();
-
         this.platforms.create(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
 
         EventBus.emit("current-scene-ready", this);
