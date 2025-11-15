@@ -42,7 +42,8 @@ export class Game extends Scene {
             .setOrigin(0.5)
             .setDepth(100);
         
-        this.rock = new Granite(this);
+        this.rock = new Granite(this, 1000, 600);
+        this.rock.throw(-3.14 / 1.5, 100);
 
         EventBus.emit('current-scene-ready', this);
     }

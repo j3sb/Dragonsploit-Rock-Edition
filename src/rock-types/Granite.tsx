@@ -1,8 +1,8 @@
 import Rock, { EffectType } from "../Rock";
 
 export default class Granite extends Rock {
-    public constructor(scene: Phaser.Scene) {
-        super(scene);
+    public constructor(scene: Phaser.Scene, x: integer, y: integer) {
+        super(scene, x, y);
     }
 
     public getEffectType(): EffectType {
