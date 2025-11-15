@@ -40,6 +40,7 @@ export class Preloader extends Scene {
         // Menu
         this.load.image("menu-bg", "Dragonsploit-_menue.png");
         this.load.image("main-bg", "dragon-background.png");
+        this.load.image("empty-room", "empty-room.png");
     }
 
     create() {
