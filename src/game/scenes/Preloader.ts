@@ -44,6 +44,7 @@ export class Preloader extends Scene {
         this.load.image("throweridle", "idlethrower.png");
         this.load.image("throwerholding", "holdingthrower.png");
         this.load.image("throwerthrowing", "throwingthrower.png");
+        this.load.image("throwerroom", "throwerroom.png");
     }
 
     create() {

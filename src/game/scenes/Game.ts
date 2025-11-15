@@ -59,9 +59,12 @@ export class Game extends Scene {
             .setScale(1000, 1)
             .refreshBody();
 
-        this.throwers.push(new Thrower(this, "normal"));
 
         EventBus.emit("current-scene-ready", this);
+    }
+
+    addThrower(type: string){
+        this.throwers.push(new Thrower(this, type));
     }
 
     update(time: number, delta: number) {

@@ -1,4 +1,5 @@
-import EmptyRoom from "./room-types/emptyRoom";
+import { Game } from "./game/scenes/Game";
+import TowerRoom from "./TowerRoom";
 import Room from "./TowerRoom";
 
 export default class Castle extends Phaser.GameObjects.GameObject {
@@ -10,12 +11,13 @@ export default class Castle extends Phaser.GameObjects.GameObject {
 
     private rooms: Room[];
 
-    public constructor(scene: Phaser.Scene) {
+    public constructor(scene: Game) {
         super(scene, "sprite");
         this.rooms = [];
         for (let y = 0; y < Castle.GRID_SIZE_Y; y++) {
             for (let x = 0; x < Castle.GRID_SIZE_X; x++) {
-                this.rooms.push(new EmptyRoom(scene, x, y, this));
+                this.rooms.push(new TowerRoom(scene, x, y, this));
+                // new EmptyRoom(scene, x, y, this);
             }
         }
     }
@@ -54,7 +56,8 @@ export default class Castle extends Phaser.GameObjects.GameObject {
             Castle.roomStart[1] + y * (Castle.roomSize[1] + Castle.roomGap),
         ];
     }
-    public clickedRoom(x: number, y: number) {
-        console.log(`Clicked room at x: ${x}, y: ${y}`);
-    }
+    // public clickedRoom(x: number, y: number) {
+        // console.log(`Clicked room at x: ${x}, y: ${y}`);
+        // this.getRoomAt(x, y).destroy();
+    // }
 }

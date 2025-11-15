@@ -59,7 +59,7 @@ export default class Thrower extends Phaser.GameObjects.GameObject {
             if(this.image.x < 500){
                 this.setThrowing();
 
-                new Granite(this.gameScene, this.image.x, this.image.y).throw(-3.14 / 1.2 + Math.random() * 0.4, 200);
+                new Granite(this.gameScene, this.image.x, this.image.y).throw(-3.14 / 1.1 + Math.random() * 0.4, 200);
             }
 
         }else if(this.isThrowing()){
