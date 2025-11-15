@@ -45,7 +45,7 @@ export class Game extends Scene {
         this.rock = new Granite(this, 1000, 600);
         this.rock.throw(-3.14 / 1.5, 100);
 
-        this.dragon = new Dragon(this, 500, 350, 100);
+        this.dragon = new Dragon(this, 50, 400, 100);
 
         // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
 

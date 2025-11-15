@@ -34,7 +34,7 @@ export class Preloader extends Scene {
         this.load.image("dragon-baby", "dragon/baby.png");
         this.load.image("dragon-claw", "dragon/claw.png");
         this.load.image("dragon-head", "dragon/head.png");
-        this.load.image("dragon-ssegment", "dragon/segment.png");
+        this.load.image("dragon-segment", "dragon/segment.png");
         this.load.image("dragon-wing", "dragon/wing.png");
 
         // Menu

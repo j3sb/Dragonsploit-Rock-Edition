@@ -1,24 +1,43 @@
 import * as Constants from "./game/Constants.js";
 import TowerRoom from "./TowerRoom.js";
 
-const DRAGON_SEGMENT_DISTANCE = 0;
+const DRAGON_SEGMENT_DISTANCE = 60;
 const DRAGON_BODY_SEGMENT_COUNT = 6;
 const DRAGON_ARM_SEGMENT_COUNT = 2;
 
-const DRAGON_SEGMENT_ANGLE_VARIANCE = Math.PI / 12;
+function degToRad(degrees: number) {
+    // For my sanity pls
+    return (degrees % 360) * ((Math.PI * 2) / 360.0);
+}
+
+function radToDeg(radians: number) {
+    // For my sanity pls
+    return radians * (360.0 / (Math.PI * 2));
+}
+
+const DRAGON_SEGMENT_ANGLE_VARIANCE = 15;
+const DRAGON_HEAD_ANGLE = 45;
+const DRAGON_CLAW_ANGLE = 0;
+const DRAGON_CLAW_SEGMENT_ANGLE = 0;
+const DRAGON_CLAW_LEFT_BASE_ANGLE = 0;
+const DRAGON_CLAW_RIGHT_BASE_ANGLE = 0;
+
+const DRAGON_HEAD_BASE_ANGLE = 270;
+const DRAGON_HEAD_SEGMENT_ANGLE = 15;
+const DRAGON_ARM_LEFT_BASE_ANGLE = 45;
+const DRAGON_ARM_RIGHT_BASE_ANGLE = 75;
+const DRAGON_ARM_SEGMENT_ANGLE = -30;
+
+const DRAGON_SEGMENT_MAX_ANGLE_VARIANCE_RAD = degToRad(5);
 
 export default class Dragon extends Phaser.GameObjects.GameObject {
     private health: number;
-    private isAttacking_: number;
+    private isAttacking_: boolean;
 
     private head: DragonHead;
-    private base: DragonSegment;
+    private headBase: DragonSegment;
     private clawLeft: DragonClaw;
-    private clawLeftBase: DragonSegment;
     private clawRight: DragonClaw;
-    private clawRightBase: DragonSegment;
-
-    private testSprite: Phaser.GameObjects.Sprite;
 
     public constructor(
         scene: Phaser.Scene,
@@ -28,9 +47,6 @@ export default class Dragon extends Phaser.GameObjects.GameObject {
     ) {
         super(scene, "dragon");
 
-        // DRAGON HEAD FOR TESTING
-        this.testSprite = scene.add.sprite(200, 200, "dragon-head");
-
         this.health = Constants.DRAGON_HEALTH;
 
         // Dragon parts
@@ -39,53 +55,68 @@ export default class Dragon extends Phaser.GameObjects.GameObject {
         const clawLeftDepth = baseDepth + 5;
         const clawRightDepth = baseDepth + 20;
 
-        this.head = new DragonHead(scene, Math.PI + 15, 0, headDepth);
-        this.base = this.head.attachMultiple(
+        this.head = new DragonHead(scene, 0, headDepth);
+        this.headBase = this.head.attachMultiple(
+            scene,
             DRAGON_BODY_SEGMENT_COUNT,
             DRAGON_SEGMENT_DISTANCE,
-            (Math.PI * 3) / 2,
-            15,
-            headDepth
+            headDepth - 1
         );
 
-        this.clawLeft = new DragonClaw(scene, Math.PI - 15, 0, clawLeftDepth);
-        this.clawLeftBase = this.clawLeft.attachMultiple(
+        this.clawLeft = new DragonClaw(scene, 0, clawLeftDepth);
+        const clawLeftBase = this.clawLeft.attachMultiple(
+            scene,
             DRAGON_ARM_SEGMENT_COUNT,
             DRAGON_SEGMENT_DISTANCE,
-            (Math.PI * 3) / 4,
-            -10,
-            clawLeftDepth
+            clawLeftDepth - 1
         );
 
-        this.clawRight = new DragonClaw(scene, Math.PI - 15, 0, clawRightDepth);
-        this.clawRightBase = this.clawRight.attachMultiple(
+        this.clawRight = new DragonClaw(scene, 0, clawRightDepth);
+        const clawRightBase = this.clawRight.attachMultiple(
+            scene,
             DRAGON_ARM_SEGMENT_COUNT,
             DRAGON_SEGMENT_DISTANCE,
-            (Math.PI * 3) / 4,
-            -10,
-            clawRightDepth
+            clawRightDepth - 1
         );
 
-        const clawBase = this.base.getNthParent(4);
+        const armAttachPoint = this.head.getNthParent(2);
 
-        this.clawLeftBase.attachTo(clawBase);
-        this.clawRightBase.attachTo(clawBase);
+        clawLeftBase.attachIndependentTo(armAttachPoint);
+        clawRightBase.attachIndependentTo(armAttachPoint);
 
         this.setPosition(positionX, positionY);
 
-        this.update(0, 0);
+        this.head.setAngleFromBase(
+            DRAGON_HEAD_BASE_ANGLE,
+            DRAGON_HEAD_SEGMENT_ANGLE
+        );
+
+        this.clawLeft.setAngleFromBase(
+            DRAGON_ARM_LEFT_BASE_ANGLE,
+            DRAGON_ARM_SEGMENT_ANGLE
+        );
+
+        this.clawRight.setAngleFromBase(
+            DRAGON_ARM_RIGHT_BASE_ANGLE,
+            DRAGON_ARM_SEGMENT_ANGLE
+        );
+
+        // this.update(0, 0);
+        this.head.update(this, 0, 0);
+        this.clawLeft.update(this, 0, 0);
+        this.clawRight.update(this, 0, 0);
     }
 
     public get positionX() {
-        return this.base.positionX;
+        return this.headBase.positionX;
     }
 
     public get positionY() {
-        return this.base.positionY;
+        return this.headBase.positionY;
     }
 
     public setPosition(x: number, y: number) {
-        this.base.setPosition(x, y);
+        this.headBase.setPosition(x, y);
     }
 
     public getHealthPercent() {
@@ -101,9 +132,9 @@ export default class Dragon extends Phaser.GameObjects.GameObject {
     public removedFromScene(): void {}
 
     public update(time: number, delta: number): void {
-        this.base.update(this, time, delta);
-        this.clawLeftBase.update(this, time, delta);
-        this.clawRightBase.update(this, time, delta);
+        this.head.update(this, time, delta);
+        this.clawLeft.update(this, time, delta);
+        this.clawRight.update(this, time, delta);
         // TODO: Other stuff!!!!
     }
 
@@ -112,28 +143,27 @@ export default class Dragon extends Phaser.GameObjects.GameObject {
 
 class DragonSegment {
     protected parent: DragonSegment | null;
-    protected angleToParent: number;
+    protected angleToParent_: number;
     protected distanceToParent: number;
-    protected angleDelta: number = 0;
     protected sprite: Phaser.GameObjects.Sprite;
+    private lastUpdate: number = -1;
+    private indepenent: boolean = false;
+
+    private angleDelta: number;
+    private angleMod: number;
 
     public constructor(
-        parent: DragonSegment | null,
+        scene: Phaser.Scene,
         distanceToParent: number,
-        angleToParent: number,
         depth: number
     ) {
-        this.parent = parent;
-        this.angleToParent = angleToParent;
+        this.parent = null;
+        this.angleToParent_ = 0;
+        this.angleDelta = 0;
+        this.angleMod = 1;
         this.distanceToParent = distanceToParent;
-        if (parent) {
-            this.sprite = parent.sprite.scene.add.sprite(
-                0,
-                0,
-                "dragon-segment"
-            );
-            this.sprite.setDepth(depth);
-        }
+        this.sprite = scene.add.sprite(0, 0, "dragon-segment");
+        this.sprite.setDepth(depth);
     }
 
     public get positionX() {
@@ -144,12 +174,17 @@ class DragonSegment {
         return this.sprite.y;
     }
 
-    public attachTo(parent: DragonSegment) {
+    public attachIndependentTo(parent: DragonSegment) {
         this.parent = parent;
+        this.indepenent = true;
     }
 
     public setAngleToParent(angle: number) {
-        this.angleToParent = angle;
+        this.angleToParent_ = ((angle % 360) * (Math.PI * 2)) / 360.0;
+    }
+
+    public getAngleToParent() {
+        return this.angleToParent_ * (360.0 / (Math.PI * 2));
     }
 
     public setPosition(x: number, y: number) {
@@ -162,7 +197,7 @@ class DragonSegment {
 
     public getNthParent(n: number) {
         let segment: DragonSegment = this;
-        while (--n > 0) {
+        while (n-- > 0) {
             if (!segment.parent) {
                 throw new Error(
                     "DragonSegment.getNthParent: cannot get offset in chain because chain is too short!"
@@ -174,51 +209,56 @@ class DragonSegment {
     }
 
     public attachMultiple(
+        scene: Phaser.Scene,
         segmentCount: number,
         distanceToParent: number,
-        startAngle: number,
-        angleDelta: number,
-        startDepth: number
+        depth: number
     ): DragonSegment {
-        let current: DragonSegment = this;
-        while (--segmentCount > 0) {
-            const next = new DragonSegment(
-                current,
+        if (segmentCount > 0) {
+            this.parent = new DragonSegment(scene, distanceToParent, depth);
+            return this.parent.attachMultiple(
+                scene,
+                segmentCount - 1,
                 distanceToParent,
-                startAngle,
-                startDepth
+                depth - 1
             );
-            startAngle += angleDelta;
-            startDepth--;
-            current = next;
         }
-        return current;
+        return this;
     }
 
-    public update(
-        dragon: Dragon,
-        time: number,
-        delta: number,
-        previousSegment: DragonSegment | null = null
-    ) {
-        if (dragon.isAttacking) {
-            // No movement while attacking.
-            return;
+    public setAngleFromBase(baseAngle: number, angleDelta: number) {
+        if (this.parent && !this.indepenent) {
+            this.parent.setAngleFromBase(baseAngle, angleDelta);
+            this.setAngleToParent(this.parent.getAngleToParent() + angleDelta);
+        } else {
+            this.setAngleToParent(baseAngle);
+        }
+    }
+
+    public update(dragon: Dragon, time: number, delta: number) {
+        if (this.lastUpdate == time) {
+            //return;
         }
 
-        if (previousSegment) {
-            this.setPosition(
-                previousSegment.positionX +
-                    Math.cos(this.angleToParent) * this.distanceToParent,
-                previousSegment.positionY +
-                    Math.sin(this.angleToParent) * this.distanceToParent
-            );
-            this.sprite.addToUpdateList();
-        }
+        // if (dragon.isAttacking) {
+        //     // No movement while attacking.
+        //     return;
+        // }
 
         if (this.parent) {
-            this.parent.update(dragon, time, delta, this);
-        } else {
+            this.parent.update(dragon, time, delta);
+
+            this.angleDelta = degToRad(Math.random() * 10 - 5);
+
+            this.setPosition(
+                this.parent.positionX +
+                    Math.cos(this.angleToParent_ + this.angleDelta) *
+                        this.distanceToParent,
+                this.parent.positionY +
+                    Math.sin(this.angleToParent_ + this.angleDelta) *
+                        this.distanceToParent
+            );
+            //this.sprite.addToUpdateList();
         }
 
         // TODO: ANGLE VARIANCE
@@ -233,19 +273,16 @@ class DragonSegment {
         //         this.parent.sprite.y +
         //         Math.sin(this.angleToParent) * this.distanceToParent
         // );
+
+        this.lastUpdate = time;
     }
 }
 
 class DragonClaw extends DragonSegment {
     private rotation: number;
 
-    public constructor(
-        scene: Phaser.Scene,
-        angleToParent: number,
-        rotation: number,
-        depth: number
-    ) {
-        super(null, DRAGON_SEGMENT_DISTANCE, angleToParent, depth);
+    public constructor(scene: Phaser.Scene, rotation: number, depth: number) {
+        super(scene, DRAGON_SEGMENT_DISTANCE, depth);
 
         this.rotation = rotation;
 
@@ -253,26 +290,16 @@ class DragonClaw extends DragonSegment {
         this.sprite.setDepth(depth);
     }
 
-    public override update(
-        dragon: Dragon,
-        time: number,
-        delta: number,
-        previousSegment: DragonSegment
-    ) {
-        super.update(dragon, time, delta, previousSegment);
+    public override update(dragon: Dragon, time: number, delta: number) {
+        super.update(dragon, time, delta);
     }
 }
 
 class DragonHead extends DragonSegment {
     private rotation: number;
 
-    public constructor(
-        scene: Phaser.Scene,
-        angleToParent: number,
-        rotation: number,
-        depth: number
-    ) {
-        super(null, DRAGON_SEGMENT_DISTANCE, angleToParent, depth);
+    public constructor(scene: Phaser.Scene, rotation: number, depth: number) {
+        super(scene, DRAGON_SEGMENT_DISTANCE, depth);
 
         this.rotation = rotation;
 
@@ -280,15 +307,19 @@ class DragonHead extends DragonSegment {
         this.sprite.setDepth(depth);
     }
 
-    public override update(
-        dragon: Dragon,
-        time: number,
-        delta: number,
-        previousSegment: DragonSegment
-    ) {
-        super.update(dragon, time, delta, previousSegment);
+    public override update(dragon: Dragon, time: number, delta: number) {
+        super.update(dragon, time, delta);
 
         // TODO:   !!!!!!!
+    }
+}
+
+class Dragonwing extends DragonSegment {
+    public constructor(scene: Phaser.Scene, rotation: number, depth: number) {
+        super(scene, DRAGON_SEGMENT_DISTANCE, depth);
+
+        this.sprite = scene.add.sprite(0, 0, "dragon-wing");
+        this.sprite.setDepth(depth);
     }
 }
 
