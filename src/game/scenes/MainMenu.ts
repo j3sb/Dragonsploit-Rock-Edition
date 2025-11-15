@@ -2,6 +2,8 @@ import { GameObjects, Scene } from 'phaser';
 
 import { EventBus } from '../EventBus';
 
+import { exploit } from 'srcscale.tsx';
+
 export class MainMenu extends Scene
 {
     background: GameObjects.Image;
