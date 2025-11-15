@@ -1,6 +1,7 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
+import Dragon from "../../Dragon";
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
@@ -10,6 +11,7 @@ export class Game extends Scene {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     // rock: Phaser.GameObjects.Image;
     rock: Granite;
+    private dragon: Dragon;
 
     constructor() {
         super("Game");
@@ -41,14 +43,16 @@ export class Game extends Scene {
             })
             .setOrigin(0.5)
             .setDepth(100);
-        
+
         this.rock = new Granite(this, 1000, 600);
         this.rock.throw(-3.14 / 1.5, 100);
 
-        EventBus.emit('current-scene-ready', this);
+        this.dragon = new Dragon(this, 500, 350, 100);
+
+        EventBus.emit("current-scene-ready", this);
     }
 
-    update() {
+    update(time: number, delta: number) {
         this.player.setVelocity(0);
 
         if (this.cursors.left.isDown) {
@@ -62,9 +66,12 @@ export class Game extends Scene {
         } else if (this.cursors.down.isDown) {
             this.player.setVelocityY(300);
         }
+
+        this.dragon.update(time, delta);
     }
 
     changeScene() {
         this.scene.start("GameOver");
     }
 }
+
