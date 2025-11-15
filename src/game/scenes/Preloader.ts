@@ -49,6 +49,7 @@ export class Preloader extends Scene {
         this.load.image("throwerthrowing", "throwingthrower.png");
         this.load.image("throwerroom", "throwerroom.png");
         this.load.audio("game-music", "music/game_jam.mp3");
+        this.load.audio("swoosh", "sound/swoosh.mp3");
 
         //GameoverScreen
         this.load.audio(

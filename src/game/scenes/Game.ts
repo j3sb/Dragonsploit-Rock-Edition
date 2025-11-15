@@ -44,7 +44,7 @@ export class Game extends Scene {
         this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
 
-        this.sound.play("game-music", { loop: true });
+        this.sound.play("game-music", { loop: true, volume: 0.1 });
 
         // if (this.input.keyboard)
         // this.cursors = this.input.keyboard.createCursorKeys();

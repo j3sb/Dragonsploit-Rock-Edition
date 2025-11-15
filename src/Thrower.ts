@@ -62,8 +62,11 @@ export default class Thrower extends Phaser.GameObjects.GameObject {
             this.image.x -= this.SPEED;
             if (this.image.x < 500) {
                 this.setThrowing();
-
-                new Granite(this.gameScene, this.image.x, this.image.y).throw(-3.14 / 1.1 + Math.random() * 0.4, 200);
+                this.scene.sound.play("swoosh", { volume: 0.2 });
+                new Granite(this.gameScene, this.image.x, this.image.y).throw(
+                    -3.14 / 1.1 + Math.random() * 0.4,
+                    200
+                );
             }
         } else if (this.isThrowing()) {
             this.throwTime++;
@@ -73,6 +76,5 @@ export default class Thrower extends Phaser.GameObjects.GameObject {
                 this.setIdle();
             }
         }
-
     }
 }
