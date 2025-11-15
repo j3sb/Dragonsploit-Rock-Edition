@@ -1,12 +1,13 @@
 import Room from "./TowerRoom";
 
-export default class Castle {
+export default class Castle extends Phaser.GameObjects.GameObject {
     public static GRID_SIZE_X = 4;
     public static GRID_SIZE_Y = 4;
 
     private rooms: Room[];
 
-    public constructor() {
+    public constructor(scene: Phaser.Scene) {
+        super(scene, "sprite");
         this.rooms = [];
     }
 

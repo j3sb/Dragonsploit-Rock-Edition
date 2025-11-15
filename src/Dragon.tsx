@@ -1,7 +1,9 @@
-export default class Dragon {
+export default class Dragon extends Phaser.GameObjects.GameObject {
     private health: number;
 
-    public constructor(startingHealth: number) {
+    public constructor(scene: Phaser.Scene, startingHealth: number) {
+        super(scene, "sprite");
         this.health = startingHealth;
     }
 }
+
