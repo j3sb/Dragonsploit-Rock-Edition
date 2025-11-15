@@ -47,6 +47,7 @@ export class Preloader extends Scene {
         this.load.image("throwerholding", "holdingthrower.png");
         this.load.image("main-bg", "dragon-background.png");
         this.load.image("throwerthrowing", "throwingthrower.png");
+        this.load.image("throwerroom", "throwerroom.png");
         this.load.audio("game-music", "game_jam.mp3");
 
         //GameoverScreen
