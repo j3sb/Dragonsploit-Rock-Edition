@@ -29,7 +29,7 @@ export class GameOver extends Scene
 
         this.credits = this.add.text(512, 450, 'Game made during a game jam by Jonas Hallin, Sabrina Bjurman, Anton Marketeg,\n Shrikant Jayaprakash, Wietse Jaarsma, Isac Lindh, Saduk, Manoj Axelsson, Victor Löfgren, Samuel Ward', {
             fontFamily: 'Arial Black', fontSize: 16, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
+            stroke: '#000000', strokeThickness: 2,
             align: 'center'
         }).setOrigin(0.5).setDepth(100);
 
