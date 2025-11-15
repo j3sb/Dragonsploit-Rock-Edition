@@ -3,6 +3,9 @@ import Room from "./TowerRoom";
 export default class Castle extends Phaser.GameObjects.GameObject {
     public static GRID_SIZE_X = 4;
     public static GRID_SIZE_Y = 4;
+    private static roomStart = [485, 283];
+    private static roomSize = [119, 82];
+    private static roomGap = 5;
 
     private rooms: Room[];
 
@@ -35,4 +38,3 @@ export default class Castle extends Phaser.GameObjects.GameObject {
         );
     }
 }
-

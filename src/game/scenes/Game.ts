@@ -1,6 +1,7 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
+import Castle from "../../Tower";
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
@@ -11,6 +12,7 @@ export class Game extends Scene {
     rock: Granite;
     // floor: Phaser.Physics.Arcade.
     platforms: Phaser.Physics.Arcade.StaticGroup;
+    tower: Castle;
 
     constructor() {
         super("Game");
@@ -24,24 +26,27 @@ export class Game extends Scene {
 
         if (this.input.keyboard)
             this.cursors = this.input.keyboard.createCursorKeys();
+        this.tower = new Castle(this);
 
-        this.gameText = this.add
-            .text(512, 384, "DRAGONSPLOIT", {
-                fontFamily: "Arial Black",
-                fontSize: 38,
-                color: "#ffffff",
-                stroke: "#000000",
-                strokeThickness: 8,
-                align: "center",
-            })
-            .setOrigin(0.5)
-            .setDepth(100);
+        // this.gameText = this.add
+        //     .text(512, 384, "DRAGONSPLOIT", {
+        //         fontFamily: "Arial Black",
+        //         fontSize: 38,
+        //         color: "#ffffff",
+        //         stroke: "#000000",
+        //         strokeThickness: 8,
+        //         align: "center",
+        //     })
+        //     .setOrigin(0.5)
+        //     .setDepth(100);
 
-        
         // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
 
         this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
+        this.platforms
+            .create(-100, this.scale.gameSize.height - 100, "rock")
+            .setScale(1000, 1)
+            .refreshBody();
 
         EventBus.emit("current-scene-ready", this);
     }
