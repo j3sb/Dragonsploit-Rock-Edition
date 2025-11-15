@@ -4,7 +4,6 @@ export default abstract class TowerRoom extends Phaser.GameObjects.GameObject {
 
     protected constructor(scene: Phaser.Scene) {
         super(scene, "towerroom");
-        super(scene, "towerRoom");
     }
 
     public get floor() {
