@@ -2,17 +2,17 @@ import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
 import Castle from "../../Tower";
+import Dragon from "../../Dragon";
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
     gameText: Phaser.GameObjects.Text;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-    // rock: Phaser.GameObjects.Image;
     rock: Granite;
-    // floor: Phaser.Physics.Arcade.
-    platforms: Phaser.Physics.Arcade.StaticGroup;
     tower: Castle;
+    platforms: Phaser.Physics.Arcade.StaticGroup; // ground so that the stones can dissapear
+    dragon: Dragon;
 
     constructor() {
         super("Game");
@@ -44,7 +44,7 @@ export class Game extends Scene {
 
         this.platforms = this.physics.add.staticGroup();
         this.platforms
-            .create(-100, this.scale.gameSize.height - 100, "rock")
+            .create(-100, this.scale.gameSize.height + 100, "rock")
             .setScale(1000, 1)
             .refreshBody();
 
@@ -52,7 +52,7 @@ export class Game extends Scene {
     }
 
     update() {
-        this.rock = new Granite(this, 1000, 600);
+        this.rock = new Granite(this, 900, 600);
         this.rock.throw(-3.14 / 1.5 + Math.random() * 0.4, 100);
     }
 
