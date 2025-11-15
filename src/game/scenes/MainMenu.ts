@@ -12,7 +12,7 @@ export class MainMenu extends Scene {
 
     create() {
         this.background = this.add.image(512, 384, "menu-bg");
-        this.sound.play("menu-music");
+        this.sound.play("menu-music", { loop: true });
         this.title = this.add
             .text(512, 460, "Click to Start", {
                 fontFamily: "Arial Black",

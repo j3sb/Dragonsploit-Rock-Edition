@@ -20,7 +20,7 @@ export class Game extends Scene {
 
     public addRocks(i: integer) {
         this.rocks += i;
-        this.showRocks()
+        this.showRocks();
     }
 
     public getRocks() {
@@ -43,6 +43,8 @@ export class Game extends Scene {
 
         this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
+
+        this.sound.play("game-music", { loop: true });
 
         // if (this.input.keyboard)
         // this.cursors = this.input.keyboard.createCursorKeys();
@@ -89,6 +91,7 @@ export class Game extends Scene {
     }
 
     changeScene() {
+        this.sound.stopByKey("game-music");
         this.scene.start("GameOver");
     }
 }
