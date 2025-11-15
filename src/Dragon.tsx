@@ -214,13 +214,11 @@ class DragonSegment {
                     Math.sin(this.angleToParent) * this.distanceToParent
             );
             this.sprite.addToUpdateList();
-            console.log("updated position", this.sprite.x, this.sprite.y);
         }
 
         if (this.parent) {
             this.parent.update(dragon, time, delta, this);
         } else {
-            console.log("parent is null");
         }
 
         // TODO: ANGLE VARIANCE

@@ -27,6 +27,7 @@ export class Game extends Scene {
 
         if (this.input.keyboard)
             this.cursors = this.input.keyboard.createCursorKeys();
+
         this.tower = new Castle(this);
 
         // this.gameText = this.add
@@ -50,7 +51,6 @@ export class Game extends Scene {
 
         this.platforms = this.physics.add.staticGroup();
         this.platforms
-            .create(-100, this.scale.gameSize.height - 100, "rock")
             .create(-100, this.scale.gameSize.height + 100, "rock")
             .setScale(1000, 1)
             .refreshBody();
