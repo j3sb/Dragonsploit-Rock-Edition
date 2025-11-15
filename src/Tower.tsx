@@ -15,13 +15,13 @@ export default class Castle extends Phaser.GameObjects.GameObject {
         this.rooms = [];
         for (let y = 0; y < Castle.GRID_SIZE_Y; y++) {
             for (let x = 0; x < Castle.GRID_SIZE_X; x++) {
-                this.rooms.push(new EmptyRoom(scene, x, y));
+                this.rooms.push(new EmptyRoom(scene, x, y, this));
             }
         }
     }
 
     public getRoomAt(x: number, y: number) {
-        if (!Castle.checkBounds(x, y)) {
+        if (Castle.checkBounds(x, y)) {
             throw new Error(
                 `getRoomAt: Coordinates out of bounds! x: ${x}, y: ${y}`
             );
@@ -30,7 +30,7 @@ export default class Castle extends Phaser.GameObjects.GameObject {
     }
 
     public setRoomAt(newRoom: Room, x: number, y: number) {
-        if (!Castle.checkBounds(x, y)) {
+        if (Castle.checkBounds(x, y)) {
             throw new Error(
                 `getRoomAt: Coordinates out of bounds! x: ${x}, y: ${y}`
             );
@@ -44,7 +44,7 @@ export default class Castle extends Phaser.GameObjects.GameObject {
         );
     }
     public static roomToWorldPosition(x: number, y: number): [number, number] {
-        if (!Castle.checkBounds(x, y)) {
+        if (Castle.checkBounds(x, y)) {
             throw new Error(
                 `roomToWorldPosition: Coordinates out of bounds! x: ${x}, y: ${y}`
             );
@@ -54,5 +54,7 @@ export default class Castle extends Phaser.GameObjects.GameObject {
             Castle.roomStart[1] + y * (Castle.roomSize[1] + Castle.roomGap),
         ];
     }
-    public clickedRoom(x: number, y: number) {}
+    public clickedRoom(x: number, y: number) {
+        console.log(`Clicked room at x: ${x}, y: ${y}`);
+    }
 }

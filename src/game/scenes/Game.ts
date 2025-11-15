@@ -30,9 +30,9 @@ export class Game extends Scene {
         this.background.setDepth(0);
 
         // if (this.input.keyboard)
-            // this.cursors = this.input.keyboard.createCursorKeys();
+        // this.cursors = this.input.keyboard.createCursorKeys();
 
-        // this.tower = new Castle(this);
+        this.tower = new Castle(this);
 
         // this.gameText = this.add
         //     .text(512, 384, "DRAGONSPLOIT", {
@@ -65,7 +65,6 @@ export class Game extends Scene {
     }
 
     update(time: number, delta: number) {
-
         this.throwers.forEach((thrower: Thrower) => thrower.update());
         // this.dragon.update(time, delta);
         // this.rock = new Granite(this, 900, 600);
@@ -76,4 +75,3 @@ export class Game extends Scene {
         this.scene.start("GameOver");
     }
 }
-
