@@ -40,7 +40,7 @@ export class Game extends Scene {
             .setOrigin(0.5)
             .setDepth(100);
 
-        this.rock = this.add.image(30, 30, 'logo').setDepth(100);
+        this.rock = this.add.image(30, 30, 'rock').setDepth(100);
 
         EventBus.emit('current-scene-ready', this);
     }
