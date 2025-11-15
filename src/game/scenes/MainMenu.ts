@@ -34,7 +34,7 @@ export class MainMenu extends Scene
 
         EventBus.emit('current-scene-ready', this);
     }
-    
+
     changeScene ()
     {
         if (this.logoTween)
