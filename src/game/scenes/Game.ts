@@ -29,10 +29,10 @@ export class Game extends Scene {
         this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
 
-        if (this.input.keyboard)
-            this.cursors = this.input.keyboard.createCursorKeys();
+        // if (this.input.keyboard)
+            // this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.tower = new Castle(this);
+        // this.tower = new Castle(this);
 
         // this.gameText = this.add
         //     .text(512, 384, "DRAGONSPLOIT", {
@@ -46,10 +46,10 @@ export class Game extends Scene {
         //     .setOrigin(0.5)
         //     .setDepth(100);
 
-        this.rock = new Granite(this, 1000, 600);
-        this.rock.throw(-3.14 / 1.5, 100);
+        // this.rock = new Granite(this, 1000, 600);
+        // this.rock.throw(-3.14 / 1.5, 100);
 
-        this.dragon = new Dragon(this, 500, 350, 100);
+        // this.dragon = new Dragon(this, 500, 350, 100);
 
         // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
 
@@ -67,7 +67,7 @@ export class Game extends Scene {
     update(time: number, delta: number) {
 
         this.throwers.forEach((thrower: Thrower) => thrower.update());
-        this.dragon.update(time, delta);
+        // this.dragon.update(time, delta);
         // this.rock = new Granite(this, 900, 600);
         // this.rock.throw(-3.14 / 1.5 + Math.random() * 0.4, 100);
     }
