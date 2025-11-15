@@ -1,4 +1,4 @@
-import Room from "./AbstractRoom";
+import Room from "./TowerRoom";
 
 export default class Castle {
     public static GRID_SIZE_X = 4;
