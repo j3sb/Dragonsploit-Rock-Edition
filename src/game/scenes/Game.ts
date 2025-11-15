@@ -6,7 +6,6 @@ export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
     gameText: Phaser.GameObjects.Text;
-    player: Phaser.Physics.Arcade.Sprite;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     // rock: Phaser.GameObjects.Image;
     rock: Granite;
@@ -17,15 +16,9 @@ export class Game extends Scene {
 
     create() {
         this.camera = this.cameras.main;
-        this.camera.setBackgroundColor(0x00ff00);
 
-        this.background = this.add.image(512, 384, "background");
-        this.background.setAlpha(0.5);
+        this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
-
-        this.player = this.physics.add.sprite(512, 500, "logo");
-        this.player.setDepth(1);
-        this.player.setCollideWorldBounds(true);
 
         if (this.input.keyboard)
             this.cursors = this.input.keyboard.createCursorKeys();
@@ -41,28 +34,14 @@ export class Game extends Scene {
             })
             .setOrigin(0.5)
             .setDepth(100);
-        
+
         this.rock = new Granite(this, 1000, 600);
         this.rock.throw(-3.14 / 1.5, 100);
 
-        EventBus.emit('current-scene-ready', this);
+        EventBus.emit("current-scene-ready", this);
     }
 
-    update() {
-        this.player.setVelocity(0);
-
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-300);
-        } else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(300);
-        }
-
-        if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-300);
-        } else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(300);
-        }
-    }
+    update() {}
 
     changeScene() {
         this.scene.start("GameOver");
