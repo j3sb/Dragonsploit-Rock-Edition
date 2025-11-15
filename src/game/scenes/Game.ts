@@ -3,6 +3,7 @@ import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
 import Castle from "../../Tower";
 import Dragon from "../../Dragon";
+import Thrower from "../../Thrower";
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
@@ -10,10 +11,11 @@ export class Game extends Scene {
     gameText: Phaser.GameObjects.Text;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     rock: Granite;
-    private dragon: Dragon;
     // floor: Phaser.Physics.Arcade.
     tower: Castle;
     platforms: Phaser.Physics.Arcade.StaticGroup; // ground so that the stones can dissapear
+    dragon: Dragon;
+    throwers: Thrower[];
 
     constructor() {
         super("Game");
@@ -21,6 +23,8 @@ export class Game extends Scene {
 
     create() {
         this.camera = this.cameras.main;
+
+        this.throwers = [];
 
         this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
@@ -55,14 +59,17 @@ export class Game extends Scene {
             .setScale(1000, 1)
             .refreshBody();
 
+        this.throwers.push(new Thrower(this, "normal"));
+
         EventBus.emit("current-scene-ready", this);
     }
 
     update(time: number, delta: number) {
-        this.rock = new Granite(this, 900, 600);
-        this.rock.throw(-3.14 / 1.5 + Math.random() * 0.4, 100);
 
+        this.throwers.forEach((thrower: Thrower) => thrower.update());
         this.dragon.update(time, delta);
+        // this.rock = new Granite(this, 900, 600);
+        // this.rock.throw(-3.14 / 1.5 + Math.random() * 0.4, 100);
     }
 
     changeScene() {
