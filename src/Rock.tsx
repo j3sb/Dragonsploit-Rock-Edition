@@ -1,3 +1,5 @@
+import { Game } from './game/scenes/Game.ts'
+
 export enum EffectType {
     DamageBoost,
     DefenseBoost,
@@ -8,10 +10,14 @@ export enum EffectType {
 export default abstract class Rock extends Phaser.GameObjects.GameObject {
     image: Phaser.Physics.Arcade.Image;
 
-    protected constructor(scene: Phaser.Scene, x: integer, y: integer) {
+    protected constructor(scene: Game, x: integer, y: integer) {
         super(scene, "rock");
 
         this.image = scene.physics.add.image(x, y, 'rock').refreshBody();
+        this.image.setBounce(0.2);
+        this.image.setCollideWorldBounds(true);
+
+        scene.physics.add.collider(this.image, scene.platforms);
     }
 
     public throw(angle: number, speed: number): void{
