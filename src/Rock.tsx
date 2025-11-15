@@ -18,8 +18,9 @@ export default abstract class Rock extends Phaser.GameObjects.GameObject {
 
         this.image = scene.physics.add.image(x, y, 'rock').refreshBody();
         this.image.setBounce(0.);
-        this.image.setCollideWorldBounds(true);
+        // this.image.setCollideWorldBounds(true);
 
+        // scene.physics.add.collider(this.image, scene.dragon, () => { scene.dragon.damage() } );
         // destroy stone when it hist the bottom platform to avoid too much lag
         scene.physics.add.collider(this.image, scene.platforms, () => { this.image.destroy();} );
     }
