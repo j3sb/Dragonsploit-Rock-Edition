@@ -1,6 +1,7 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
+import currency_update from "srcscale.tsx";
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
@@ -9,6 +10,7 @@ export class Game extends Scene {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     // rock: Phaser.GameObjects.Image;
     rock: Granite;
+    dollar_scale: currency_update;
 
     constructor() {
         super("Game");
@@ -37,6 +39,8 @@ export class Game extends Scene {
 
         this.rock = new Granite(this, 1000, 600);
         this.rock.throw(-3.14 / 1.5, 100);
+
+        this.dollar_scale = new currency_update(this, 0);
 
         EventBus.emit("current-scene-ready", this);
     }

@@ -3,11 +3,11 @@ export default class currency_update {
     private _display_text: Phaser.GameObjects.text;
     private _scene: Phaser.scene;
 
-    constructor(scene: PhaserGame.scene, initial_value = 0) {
+    constructor(scene: PhaserGame.scene, initial_value: integer) {
         this._scene = scene;
         this._currency = initial_value;
 
-        const x = this._scene.scale.width - 20;
+        const x = this._scene.scale.width - 20; //location of the currency display: top right corner
         const y = 20;
 
         this._display_text = scene.add
