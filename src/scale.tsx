@@ -1,9 +1,9 @@
 export default class currency_update {
     private _currency: number;
-    private _display_text: Phaser.GameObjects.text;
-    private _scene: Phaser.scene;
+    private _display_text: Phaser.GameObjects.Text;
+    private _scene: Phaser.Scene;
 
-    constructor(scene: PhaserGame.scene, initial_value = 0) {
+    constructor(scene: Phaser.Scene, initial_value = 0) {
         this._scene = scene;
         this._currency = initial_value;
 
@@ -11,7 +11,7 @@ export default class currency_update {
         const y = 20;
 
         this._display_text = scene.add
-            .text(x, y, this._currency, {
+            .text(x, y, this._currency.toString(), {
                 fontFamily: "Arial",
                 fontSize: "24px",
                 color: "#ffff00",
@@ -30,7 +30,7 @@ export default class currency_update {
                 this._currency = 0;
             }
         }
-        this._display_text.setText(this._currency);
+        this._display_text.setText(this._currency.toString());
     }
 }
 
