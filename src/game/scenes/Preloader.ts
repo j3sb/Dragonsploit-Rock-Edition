@@ -39,7 +39,7 @@ export class Preloader extends Scene {
 
         // Menu
         this.load.image("menu-bg", "Dragonsploit-_menue.png");
-        this.load.audio("menu-music", "game_jam_mainmenu.mp3");
+        this.load.audio("menu-music", "music/game_jam_mainmenu.mp3");
 
         //Game
         this.load.image("empty-room", "empty-room.png");
@@ -48,12 +48,12 @@ export class Preloader extends Scene {
         this.load.image("main-bg", "dragon-background.png");
         this.load.image("throwerthrowing", "throwingthrower.png");
         this.load.image("throwerroom", "throwerroom.png");
-        this.load.audio("game-music", "game_jam.mp3");
+        this.load.audio("game-music", "music/game_jam.mp3");
 
         //GameoverScreen
         this.load.audio(
             "gameover-music",
-            "game_jam_creepy_deathscenemusic.mp3"
+            "music/game_jam_creepy_deathscenemusic.mp3"
         );
     }
 
