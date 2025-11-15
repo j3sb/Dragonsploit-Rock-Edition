@@ -1,8 +1,8 @@
 import Rock, { EffectType } from "../Rock";
 
 export default class Sapphire extends Rock {
-    public constructor() {
-        super();
+    public constructor(scene: Phaser.Scene, x: integer, y: integer) {
+        super(scene, x, y);
     }
 
     public getEffectType(): EffectType {
