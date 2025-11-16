@@ -36,6 +36,7 @@ export class Preloader extends Scene {
         this.load.image("dragon-head", "dragon/head.png");
         this.load.image("dragon-segment", "dragon/segment.png");
         this.load.image("dragon-wing", "dragon/wing.png");
+        this.load.image("dragon-fireball", "dragon/fireball.png");
 
         // Menu
         this.load.image("menu-bg", "Dragonsploit-_menue.png");
@@ -66,3 +67,4 @@ export class Preloader extends Scene {
         this.scene.start("MainMenu");
     }
 }
+

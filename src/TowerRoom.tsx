@@ -6,7 +6,7 @@ export default class TowerRoom extends Phaser.GameObjects.GameObject {
     private _health: number;
     gameScene: Game;
 
-    roomType: string // can dynamically change
+    roomType: string; // can dynamically change
 
     myImage: Phaser.GameObjects.Image;
     myPos: [number, number];
@@ -22,7 +22,7 @@ export default class TowerRoom extends Phaser.GameObjects.GameObject {
 
         this.roomType = "empty";
 
-        this.myImage = scene.add.image(
+        this.myImage = scene.physics.add.staticImage(
             ...Castle.roomToWorldPosition(x, y),
             "empty-room"
         );
@@ -36,11 +36,23 @@ export default class TowerRoom extends Phaser.GameObjects.GameObject {
         this.myCastle = castle;
     }
 
-    public isEmpty(){
+    public getImage() {
+        return this.myImage;
+    }
+
+    public isEmpty() {
         return this.roomType == "empty";
     }
 
-    public setThrower(){
+    public get worldPositionX() {
+        return this.myImage.x;
+    }
+
+    public get worldPositionY() {
+        return this.myImage.y;
+    }
+
+    public setThrower() {
         this.roomType = "thrower";
         this.myImage.setTexture("throwerroom");
         this.gameScene.addThrower("normal");
@@ -48,7 +60,7 @@ export default class TowerRoom extends Phaser.GameObjects.GameObject {
 
     onClick() {
         // handle this
-        if(this.isEmpty()){
+        if (this.isEmpty()) {
             this.setThrower();
         }
     }

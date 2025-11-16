@@ -2,8 +2,9 @@ import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
 import Castle from "../../Tower";
-import Dragon from "../../Dragon";
+import Dragon, { DragonHitLocation } from "../../Dragon";
 import Thrower from "../../Thrower";
+import TowerRoom from "../../TowerRoom";
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
@@ -66,7 +67,15 @@ export class Game extends Scene {
         // this.rock = new Granite(this, 1000, 600);
         // this.rock.throw(-3.14 / 1.5, 100);
 
-        this.dragon = new Dragon(this, 100, 440, 100);
+        this.dragon = new Dragon(this, 100, 400, 100);
+        this.dragon.setDragonHitCallback((hitLocation: DragonHitLocation) => {
+            this.dragon.damage(10000);
+            console.log("DRAGON HIT");
+        });
+        this.dragon.setFireballHitCallback((room: TowerRoom) => {
+            //// ???????????+
+            console.log("FIREBALL HIT");
+        });
 
         // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
 
