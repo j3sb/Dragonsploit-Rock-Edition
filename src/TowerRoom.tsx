@@ -42,7 +42,7 @@ export default class TowerRoom extends Phaser.GameObjects.GameObject {
 
     public setThrower() {
         this.roomType = "thrower";
-        this.myImage.setTexture("throwerroom");
+        this.myImage.setTexture("bedroom");
         this.gameScene.addThrower("normal");
     }
 
