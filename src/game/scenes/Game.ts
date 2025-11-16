@@ -1,10 +1,10 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
-import currency_update from "../../scale.tsx";
+import currency_update from "../../scale";
 import Castle from "../../Tower";
 import Dragon from "../../Dragon";
-import Thrower from "../../Thrower.js";
+import Thrower from "../../Thrower";
 import { HPBar2 } from "../towerhitpoint";
 
 export class Game extends Scene {
