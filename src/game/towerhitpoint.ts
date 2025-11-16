@@ -1,21 +1,30 @@
 import Phaser from "phaser";
 
-export class TowerSprite extends Phaser.Physics.Arcade.Sprite {
-    maxHP = 300;
-    hp = 300;
+export class HPBar2 {
+    maxHP = 600;
+    hp = 600;
     hpBar!: Phaser.GameObjects.Graphics;
+    pos: [number, number];
+    size: [number, number];
+    scene: Phaser.Scene;
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "tower");
-
+    constructor(
+        scene: Phaser.Scene,
+        x: number,
+        y: number,
+        width: number,
+        height: number
+    ) {
         // Add the sprite
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
+        //scene.add.existing(this);
+        //scene.physics.add.existing(this);
 
         // HP Bar
         this.hpBar = scene.add.graphics();
-
+        this.pos = [x, y];
+        this.size = [width, height];
         this.updateHPBar();
+        this.scene = scene;
     }
 
     takeDamage(amount: number) {
@@ -35,35 +44,30 @@ export class TowerSprite extends Phaser.Physics.Arcade.Sprite {
     }
 
     destroyTower() {
-        console.log("💥 Tower destroyed!");
-        this.hpBar.destroy();
-        this.destroy();
+        this.scene.scene.start("GameOver");
     }
 
     updateHPBar() {
-        const width = 50;
-        const height = 6;
-
         const hpPercent = this.hp / this.maxHP;
 
         this.hpBar.clear();
 
         // Background (red)
         this.hpBar.fillStyle(0xff0000);
-        this.hpBar.fillRect(this.x - width / 2, this.y - 40, width, height);
+        this.hpBar.fillRect(
+            this.pos[0] - this.size[0] / 2,
+            this.pos[1] - this.size[1] / 2,
+            this.size[0],
+            this.size[1]
+        );
 
         // HP (green)
         this.hpBar.fillStyle(0x00ff00);
         this.hpBar.fillRect(
-            this.x - width / 2,
-            this.y - 40,
-            width * hpPercent,
-            height
+            this.pos[0] - this.size[0] / 2,
+            this.pos[1] - this.size[1] / 2,
+            this.size[0] * hpPercent,
+            this.size[1]
         );
-    }
-
-    preUpdate(time: number, delta: number) {
-        super.preUpdate(time, delta);
-        this.updateHPBar();
     }
 }
