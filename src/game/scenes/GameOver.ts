@@ -1,36 +1,59 @@
-import { EventBus } from '../EventBus';
-import { Scene } from 'phaser';
+import { EventBus } from "../EventBus";
+import { Scene } from "phaser";
 
-export class GameOver extends Scene
-{
+export class GameOver extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
-    gameOverText : Phaser.GameObjects.Text;
+    gameOverText: Phaser.GameObjects.Text;
+    credits: Phaser.GameObjects.Text;
 
-    constructor ()
-    {
-        super('GameOver');
+    constructor() {
+        super("GameOver");
     }
 
-    create ()
-    {
-        this.camera = this.cameras.main
+    create() {
+        this.camera = this.cameras.main;
         this.camera.setBackgroundColor(0xff0000);
 
-        this.background = this.add.image(512, 384, 'background');
+        this.background = this.add.image(512, 384, "background");
         this.background.setAlpha(0.5);
 
-        this.gameOverText = this.add.text(512, 384, 'Game Over', {
-            fontFamily: 'Arial Black', fontSize: 64, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setOrigin(0.5).setDepth(100);
-        
-        EventBus.emit('current-scene-ready', this);
+        this.sound.play("gameover-music", { loop: true });
+
+        this.gameOverText = this.add
+            .text(512, 384, "Game Over", {
+                fontFamily: "Arial Black",
+                fontSize: 64,
+                color: "#ffffff",
+                stroke: "#000000",
+                strokeThickness: 8,
+                align: "center",
+            })
+            .setOrigin(0.5)
+            .setDepth(100);
+
+        this.credits = this.add
+            .text(
+                512,
+                450,
+                "Game made during a game jam by Jonas Hallin, Sabrina Bjurman, Anton Marketeg,\n Shrikant Jayaprakash, Wietse Jaarsma, Isac Lindh, Saduk, Manoj Axelsson, Victor Löfgren, Samuel Ward",
+                {
+                    fontFamily: "Arial Black",
+                    fontSize: 16,
+                    color: "#ffffff",
+                    stroke: "#000000",
+                    strokeThickness: 2,
+                    align: "center",
+                }
+            )
+            .setOrigin(0.5)
+            .setDepth(100);
+
+        EventBus.emit("current-scene-ready", this);
     }
 
-    changeScene ()
-    {
-        this.scene.start('MainMenu');
+    changeScene() {
+        this.sound.stopByKey("gameover-music");
+        this.scene.start("MainMenu");
     }
 }

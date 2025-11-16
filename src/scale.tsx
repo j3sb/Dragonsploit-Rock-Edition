@@ -1,12 +1,12 @@
 export default class currency_update {
     private _currency: number;
-    private _display_text: Phaser.GameObjects.text;
-    private _scene: Phaser.scene;
+    private _display_text: Phaser.GameObjects.Text;
+    private _scene: Phaser.Scene;
     private _rooms_unlocked: number = 1; //begins with 1 room
     private _people: number = 1; //begins with 1 people
     private _unlock_next_room_cost: number = 30; //initial cost to unlock next/2nd room
 
-    constructor(scene: Phaser.scene, initial_value: number) {
+    constructor(scene: Phaser.Scene, initial_value: number) {
         this._scene = scene;
         this._currency = initial_value;
 
@@ -14,7 +14,7 @@ export default class currency_update {
         const y = 20;
 
         this._display_text = scene.add   //displaying the scale/currency value
-            .text(x, y, this._currency, {
+            .text(x, y, this._currency.toString(), {
                 fontFamily: "Arial",
                 fontSize: "24px",
                 color: "#ffff00",
@@ -33,7 +33,7 @@ export default class currency_update {
 
 
     private update_display(): void {
-        this._display_text.setText(${this._currency});
+        this._display_text.setText(`${this._currency}`);
     }
 
     //unlock rooms and people based on currency thresholds
@@ -47,7 +47,6 @@ export default class currency_update {
             this._unlock_next_room_cost *= 2; //double the cost for next room
             this.update_display();
         }
-        
     }
 }
      //increase cost for next room
