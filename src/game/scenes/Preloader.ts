@@ -50,7 +50,7 @@ export class Preloader extends Scene {
         this.load.image("throwerroom", "throwerroom.png");
         this.load.audio("game-music", "music/game_jam.mp3");
         this.load.audio("swoosh", "sound/swoosh.mp3");
-
+        this.load.image("startButton", "assets/start_Buton_dragonsploit.png");
         //GameoverScreen
         this.load.audio(
             "gameover-music",
