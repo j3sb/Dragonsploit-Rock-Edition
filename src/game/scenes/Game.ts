@@ -3,8 +3,9 @@ import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
 import currency_update from "../../scale";
 import Castle from "../../Tower";
-import Dragon from "../../Dragon";
+import Dragon, { DragonHitLocation } from "../../Dragon";
 import Thrower from "../../Thrower";
+import TowerRoom from "../../TowerRoom";
 import { HPBar2 } from "../towerhitpoint";
 
 export class Game extends Scene {
@@ -43,7 +44,7 @@ export class Game extends Scene {
         this.camera = this.cameras.main;
 
         this.throwers = [];
-        this.rocks = 1;
+        this.rocks = 11;
 
         this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);
@@ -70,7 +71,16 @@ export class Game extends Scene {
         // this.rock = new Granite(this, 1000, 600);
         // this.rock.throw(-3.14 / 1.5, 100);
 
-        this.dragon = new Dragon(this, 100, 440, 100);
+        this.dragon = new Dragon(this, 100, 400, 100);
+        this.dragon.setDragonHitCallback((hitLocation: DragonHitLocation) => {
+            this.dragon.damage(10000);
+            console.log("DRAGON HIT");
+        });
+        this.dragon.setFireballHitCallback((room: TowerRoom) => {
+            //// ???????????+
+            console.log("FIREBALL HIT");
+        });
+
         this.dollar_scale = new currency_update(this, 20);
 
         // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
@@ -108,3 +118,4 @@ export class Game extends Scene {
         this.scene.start("GameOver");
     }
 }
+

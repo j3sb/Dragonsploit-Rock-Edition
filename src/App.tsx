@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { IRefPhaserGame, PhaserGame } from "./PhaserGame";
 import { MainMenu } from "./game/scenes/MainMenu";
 
@@ -45,7 +45,7 @@ function App() {
     };
 
     // Event emitted from the PhaserGame component
-    const currentScene = (scene: Phaser.Scene) => {};
+    const currentScene = (_scene: Phaser.Scene) => {};
 
     return (
         <div id="app">

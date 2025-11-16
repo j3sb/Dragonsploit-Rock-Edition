@@ -40,6 +40,21 @@ export default class Castle extends Phaser.GameObjects.GameObject {
         this.rooms[y * Castle.GRID_SIZE_X + x] = newRoom;
     }
 
+    public getAllActiveRooms(): TowerRoom[] {
+        const activeRooms: TowerRoom[] = [];
+        for (
+            let i = 0, n = Castle.GRID_SIZE_X * Castle.GRID_SIZE_Y;
+            i < n;
+            i++
+        ) {
+            const room = this.rooms[i];
+            if (!room.isEmpty()) {
+                activeRooms.push(room);
+            }
+        }
+        return activeRooms;
+    }
+
     private static checkBounds(x: number, y: number): boolean {
         return (
             x < 0 || x >= Castle.GRID_SIZE_X || y < 0 || y >= Castle.GRID_SIZE_Y
@@ -57,7 +72,8 @@ export default class Castle extends Phaser.GameObjects.GameObject {
         ];
     }
     // public clickedRoom(x: number, y: number) {
-        // console.log(`Clicked room at x: ${x}, y: ${y}`);
-        // this.getRoomAt(x, y).destroy();
+    // console.log(`Clicked room at x: ${x}, y: ${y}`);
+    // this.getRoomAt(x, y).destroy();
     // }
 }
+

@@ -2,8 +2,6 @@
 
 ## ✅ Compatibility Check Results
 
-Your Sapphire rock is **fully compatible** with your game! Here's the summary:
-
 ### Current Status
 
 -   ✅ **TypeScript Compilation**: No errors

@@ -31,8 +31,6 @@ export class HPBar2 {
         this.hp = Math.max(0, this.hp - amount);
         this.updateHPBar();
 
-        console.log(`Tower HP: ${this.hp}/${this.maxHP}`);
-
         if (this.hp <= 0) {
             this.destroyTower();
         }
