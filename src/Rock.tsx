@@ -11,12 +11,17 @@ export default abstract class Rock extends Phaser.GameObjects.GameObject {
     image: Phaser.Physics.Arcade.Image;
     scene: Phaser.Scene;
 
-    protected constructor(scene: Game, x: integer, y: integer) {
+    protected constructor(
+        scene: Game,
+        x: integer,
+        y: integer,
+        texture: string = "rock"
+    ) {
         super(scene, "rock");
 
         this.scene = scene;
 
-        this.image = scene.physics.add.image(x, y, "rock").refreshBody();
+        this.image = scene.physics.add.image(x, y, texture).refreshBody();
         this.image.setBounce(0);
         // this.image.setCollideWorldBounds(true);
 

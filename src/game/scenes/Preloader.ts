@@ -29,6 +29,7 @@ export class Preloader extends Scene {
         this.load.image("logo", "logo.png");
         this.load.image("star", "star.png");
         this.load.image("rock", "rock.png");
+        this.load.image("granite", "dragon/granite stone.png");
 
         // Dragon
         this.load.image("dragon-baby", "dragon/baby.png");
@@ -51,7 +52,8 @@ export class Preloader extends Scene {
         this.load.image("throwerroom", "throwerroom.png");
         this.load.audio("game-music", "music/game_jam.mp3");
         this.load.audio("swoosh", "sound/swoosh.mp3");
-
+        this.load.image("startButton", "start_Buton_dragonsploit.png");
+        this.load.image("bedroom", "bedroom.png");
         //GameoverScreen
         this.load.audio(
             "gameover-music",

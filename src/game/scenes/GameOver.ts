@@ -50,6 +50,10 @@ export class GameOver extends Scene {
             .setDepth(100);
 
         EventBus.emit("current-scene-ready", this);
+        this.background.setInteractive({ useHandCursor: true });
+        this.background.on("pointerdown", () => {
+            this.changeScene();
+        });
     }
 
     changeScene() {

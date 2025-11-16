@@ -4,7 +4,7 @@ import { EventBus } from "../EventBus";
 
 export class MainMenu extends Scene {
     background: GameObjects.Image;
-    title: GameObjects.Text;
+    startBtn: GameObjects.Image;
 
     constructor() {
         super("MainMenu");
@@ -13,22 +13,30 @@ export class MainMenu extends Scene {
     create() {
         this.background = this.add.image(512, 384, "menu-bg");
         this.sound.play("menu-music", { loop: true });
-        this.title = this.add
-            .text(512, 460, "Click to Start", {
-                fontFamily: "Arial Black",
-                fontSize: 38,
-                color: "#ffffff",
-                stroke: "#000000",
-                strokeThickness: 8,
-                align: "center",
-            })
-            .setOrigin(0.5)
-            .setDepth(100);
+        const startBtn = this.add
+            .image(512, 500, "startButton")
+            .setInteractive({ useHandCursor: true })
+            .setScale(0.5, 0.4);
 
-        this.title.setInteractive({ useHandCursor: true });
-        this.title.on("pointerdown", () => {
+        startBtn.on("pointerdown", () => {
             this.changeScene();
         });
+        // this.title = this.add
+        //     .text(512, 460, "Click to Start", {
+        //         fontFamily: "Arial Black",
+        //         fontSize: 38,
+        //         color: "#ffffff",
+        //         stroke: "#000000",
+        //         strokeThickness: 8,
+        //         align: "center",
+        //     })
+        //     .setOrigin(0.5)
+        //     .setDepth(100);
+
+        // this.title.setInteractive({ useHandCursor: true });
+        // this.title.on("pointerdown", () => {
+        //     this.changeScene();
+        // });
 
         EventBus.emit("current-scene-ready", this);
     }
