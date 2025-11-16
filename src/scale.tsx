@@ -13,9 +13,9 @@ export default class currency_update {
         const x = this._scene.scale.width - 20; //location of the currency display: top right corner
         const y = 20;
 
-        this._display_text = scene.add   //displaying the scale/currency value
+        this._display_text = scene.add //displaying the scale/currency value
             .text(x, y, this._currency.toString(), {
-                fontFamily: "Arial",
+                fontFamily: "Times New Roman",
                 fontSize: "24px",
                 color: "#ffff00",
                 stroke: "#000000",
@@ -31,7 +31,6 @@ export default class currency_update {
         this.unlock_rooms_people();
     }
 
-
     private update_display(): void {
         this._display_text.setText(`${this._currency}`);
     }
@@ -43,27 +42,14 @@ export default class currency_update {
             this._currency -= this._unlock_next_room_cost; //deduct cost from current currency
             this._rooms_unlocked += 1;
             this._people += 1;
-            console.log(`Room ${this._rooms_unlocked} and ${this._people} people unlocked!`);
+            console.log(
+                `Room ${this._rooms_unlocked} and ${this._people} people unlocked!`
+            );
             this._unlock_next_room_cost *= 2; //double the cost for next room
             this.update_display();
         }
     }
 }
-     //increase cost for next room
-    // public update(hit: boolean): void {
-    //     if (hit) {
-    //         this._currency += 3;
-    //     } 
-    //     //when buying rooms
-    //     else {
-    //         this._currency -= 2;
-    //         if (this._currency < 0) {
-    //             this._currency = 0;
-    //         }
-    //     }
-    //     this._display_text.setText(this._currency);
-    // }
-
 
 /*
 export default abstract class Rock extends Phaser.GameObjects.GameObject {
