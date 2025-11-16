@@ -11,7 +11,7 @@ export default class currency_update {
         this._currency = initial_value;
 
         const x = this._scene.scale.width - 20; //location of the currency display: top right corner
-        const y = 20;
+        const y = 60;
 
         this._display_text = scene.add //displaying the scale/currency value
             .text(x, y, this._currency.toString(), {
@@ -50,7 +50,6 @@ export default class currency_update {
         }
     }
 }
-
 
 /*
 export default abstract class Rock extends Phaser.GameObjects.GameObject {
