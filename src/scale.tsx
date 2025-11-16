@@ -13,7 +13,8 @@ export default class currency_update {
         const x = this._scene.scale.width - 20; //location of the currency display: top right corner
         const y = 60;
 
-        this._display_text = scene.add //displaying the scale/currency value
+        //displaying the scale/currency value
+        this._display_text = scene.add
             .text(x, y, this._currency.toString(), {
                 fontFamily: "Times New Roman",
                 fontSize: "24px",
@@ -32,7 +33,7 @@ export default class currency_update {
     }
 
     private update_display(): void {
-        this._display_text.setText(`Scale: ${this._currency}`);
+        this._display_text.setText("Scale: " + this._currency);
     }
 
     //unlock rooms and people based on currency thresholds
