@@ -32,7 +32,7 @@ export default class currency_update {
     }
 
     private update_display(): void {
-        this._display_text.setText(`${this._currency}`);
+        this._display_text.setText(`Scale: ${this._currency}`);
     }
 
     //unlock rooms and people based on currency thresholds
