@@ -14,7 +14,7 @@ export default class Thrower {
         this.throwTime = 0;
 
         // Create the thrower sprite
-        this.image = scene.add.image(900, 500, "throweridle");
+        this.image = scene.add.image(700, 200, "throweridle");
         this.image.setDepth(50);
     }
 
@@ -39,11 +39,11 @@ export default class Thrower {
 
     update() {
         if (this.animState == "idle") {
-            this.image.x -= this.SPEED;
-            if (this.image.x < 500) {
+            console.log("updating thrower (b) " + this.animState + " " + this.image.x);
+            this.image.x += this.SPEED;
+            console.log("updating thrower (a) " + this.animState + " " + this.image.x);
+            if (this.image.x > 900) {
                 this.setHolding();
-            } else {
-                this.image.x += this.SPEED;
             }
         } else if (this.animState == "holding") {
             this.image.x -= this.SPEED;
