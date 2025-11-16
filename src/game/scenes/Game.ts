@@ -40,7 +40,7 @@ export class Game extends Scene {
         this.rock = new Granite(this, 1000, 600);
         this.rock.throw(-3.14 / 1.5, 100);
 
-        this.dollar_scale = new currency_update(this, 0);
+        this.dollar_scale = new currency_update(this, 20);
 
         EventBus.emit("current-scene-ready", this);
     }
