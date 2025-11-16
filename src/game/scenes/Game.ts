@@ -7,7 +7,6 @@ import Dragon from "../../Dragon";
 import Thrower from "../../Thrower";
 import { HPBar2 } from "../towerhitpoint";
 
-
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
@@ -96,6 +95,12 @@ export class Game extends Scene {
         this.towerHPBar.takeDamage(delta * 0.001);
         // this.rock = new Granite(this, 900, 600);
         // this.rock.throw(-3.14 / 1.5 + Math.random() * 0.4, 100);
+    }
+
+    //when the stone hits the dragon:
+    handle_hit() {
+        this.dollar_scale.gain_on_hit(); //player gains currency
+        this.dollar_scale.unlock_rooms_people(); //check if new rooms/people can be unlocked
     }
 
     changeScene() {

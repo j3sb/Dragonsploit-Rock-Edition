@@ -37,7 +37,7 @@ export default class currency_update {
     }
 
     //unlock rooms and people based on currency thresholds
-    private unlock_rooms_people(): void {
+    public unlock_rooms_people(): void {
         //unlock next room for every 30 currency
         if (this._currency >= this._unlock_next_room_cost) {
             this._currency -= this._unlock_next_room_cost; //deduct cost from current currency
