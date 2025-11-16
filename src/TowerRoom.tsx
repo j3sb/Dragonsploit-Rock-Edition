@@ -1,12 +1,56 @@
-export default abstract class TowerRoom extends Phaser.GameObjects.GameObject {
+import { Game } from "./game/scenes/Game";
+import Castle from "./Tower";
+
+export default class TowerRoom extends Phaser.GameObjects.GameObject {
     private floor_: number;
     private _health: number;
+    gameScene: Game;
 
-    protected constructor(scene: Phaser.Scene) {
-        super(scene, "towerRoom");
-    }
+    roomType: string // can dynamically change
+
+    myImage: Phaser.GameObjects.Image;
+    myPos: [number, number];
+    myCastle: Castle;
 
     public get floor() {
         return this.floor_;
     }
+
+    constructor(scene: Game, x: number, y: number, castle: Castle) {
+        super(scene, "towerroom");
+        this.gameScene = scene;
+
+        this.roomType = "empty";
+
+        this.myImage = scene.add.image(
+            ...Castle.roomToWorldPosition(x, y),
+            "empty-room"
+        );
+
+        this.myImage.setInteractive({ useHandCursor: true });
+        this.myImage.on("pointerdown", () => {
+            this.onClick();
+        });
+
+        this.myPos = [x, y];
+        this.myCastle = castle;
+    }
+
+    public isEmpty(){
+        return this.roomType == "empty";
+    }
+
+    public setThrower(){
+        this.roomType = "thrower";
+        this.myImage.setTexture("throwerroom");
+        this.gameScene.addThrower("normal");
+    }
+
+    onClick() {
+        // handle this
+        if(this.isEmpty()){
+            this.setThrower();
+        }
+    }
 }
+

@@ -29,8 +29,33 @@ export class Preloader extends Scene {
         this.load.image("logo", "logo.png");
         this.load.image("star", "star.png");
         this.load.image("rock", "rock.png");
+        this.load.image("granite", "dragon/granite stone.png");
+
+        // Dragon
+        this.load.image("dragon-baby", "dragon/baby.png");
+        this.load.image("dragon-claw", "dragon/claw.png");
+        this.load.image("dragon-head", "dragon/head.png");
+        this.load.image("dragon-ssegment", "dragon/segment.png");
+        this.load.image("dragon-wing", "dragon/wing.png");
+
+        // Menu
         this.load.image("menu-bg", "Dragonsploit-_menue.png");
+        this.load.audio("menu-music", "game_jam_mainmenu.mp3");
+
+        //Game
+        this.load.image("empty-room", "empty-room.png");
+        this.load.image("throweridle", "idlethrower.png");
+        this.load.image("throwerholding", "holdingthrower.png");
         this.load.image("main-bg", "dragon-background.png");
+        this.load.image("throwerthrowing", "throwingthrower.png");
+        this.load.image("throwerroom", "throwerroom.png");
+        this.load.audio("game-music", "game_jam.mp3");
+
+        //GameoverScreen
+        this.load.audio(
+            "gameover-music",
+            "game_jam_creepy_deathscenemusic.mp3"
+        );
     }
 
     create() {
