@@ -35,12 +35,12 @@ export class Preloader extends Scene {
         this.load.image("dragon-baby", "dragon/baby.png");
         this.load.image("dragon-claw", "dragon/claw.png");
         this.load.image("dragon-head", "dragon/head.png");
-        this.load.image("dragon-ssegment", "dragon/segment.png");
+        this.load.image("dragon-segment", "dragon/segment.png");
         this.load.image("dragon-wing", "dragon/wing.png");
 
         // Menu
         this.load.image("menu-bg", "Dragonsploit-_menue.png");
-        this.load.audio("menu-music", "game_jam_mainmenu.mp3");
+        this.load.audio("menu-music", "music/game_jam_mainmenu.mp3");
 
         //Game
         this.load.image("empty-room", "empty-room.png");
@@ -49,12 +49,13 @@ export class Preloader extends Scene {
         this.load.image("main-bg", "dragon-background.png");
         this.load.image("throwerthrowing", "throwingthrower.png");
         this.load.image("throwerroom", "throwerroom.png");
-        this.load.audio("game-music", "game_jam.mp3");
-
+        this.load.audio("game-music", "music/game_jam.mp3");
+        this.load.audio("swoosh", "sound/swoosh.mp3");
+        this.load.image("startButton", "assets/start_Buton_dragonsploit.png");
         //GameoverScreen
         this.load.audio(
             "gameover-music",
-            "game_jam_creepy_deathscenemusic.mp3"
+            "music/game_jam_creepy_deathscenemusic.mp3"
         );
     }
 

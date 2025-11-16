@@ -1,69 +1,66 @@
-export default class Thrower {
-    private scene: Phaser.Scene;
-    private sprite: Phaser.GameObjects.Sprite;
-    private state: "idle" | "holding" | "throwing";
-    private throwTimer: number;
-    private throwDelay: number;
+import Granite from "./rock-types/Granite.js";
+import { Game } from "./game/scenes/Game.js";
 
-    constructor(scene: Phaser.Scene, _type: string) {
-        this.scene = scene;
-        this.state = "idle";
-        this.throwTimer = 0;
-        this.throwDelay = 3000; // 3 seconds between throws
+export default class Thrower {
+    private gameScene: Game;
+    private image: Phaser.GameObjects.Image;
+    private animState: "idle" | "holding" | "throwing";
+    private throwTime: number;
+    private readonly SPEED = 5;
+
+    constructor(scene: Game, _type: string) {
+        this.gameScene = scene;
+        this.animState = "idle";
+        this.throwTime = 0;
 
         // Create the thrower sprite
-        this.sprite = scene.add.sprite(100, 500, "throweridle");
-        this.sprite.setDepth(50);
+        this.image = scene.add.image(900, 500, "throweridle");
+        this.image.setDepth(50);
+    }
+
+    private setIdle() {
+        this.animState = "idle";
+        this.image.setTexture("throweridle");
+    }
+
+    private setHolding() {
+        this.animState = "holding";
+        this.image.setTexture("throwerholding");
+    }
+
+    private setThrowing() {
+        this.animState = "throwing";
+        this.image.setTexture("throwerthrowing");
+    }
+
+    private isThrowing() {
+        return this.animState == "throwing";
     }
 
     update() {
-        this.throwTimer += this.scene.game.loop.delta;
-
-        switch (this.state) {
-            case "idle":
-                if (this.throwTimer >= this.throwDelay) {
-                    this.startHolding();
-                }
-                break;
-            case "holding":
-                // Transition to throwing after a short delay
-                if (this.throwTimer >= 500) {
-                    this.throw();
-                }
-                break;
-            case "throwing":
-                // Return to idle after throw animation
-                if (this.throwTimer >= 300) {
-                    this.returnToIdle();
-                }
-                break;
-        }
-    }
-
-    private startHolding() {
-        this.state = "holding";
-        this.sprite.setTexture("throwerholding");
-        this.throwTimer = 0;
-    }
-
-    private throw() {
-        this.state = "throwing";
-        this.sprite.setTexture("throwerthrowing");
-        this.throwTimer = 0;
-
-        // TODO: Create and throw a rock here
-        // Example: new Granite(this.scene, this.sprite.x, this.sprite.y);
-    }
-
-    private returnToIdle() {
-        this.state = "idle";
-        this.sprite.setTexture("throweridle");
-        this.throwTimer = 0;
-    }
-
-    destroy() {
-        if (this.sprite) {
-            this.sprite.destroy();
+        if (this.animState == "idle") {
+            this.image.x -= this.SPEED;
+            if (this.image.x < 500) {
+                this.setHolding();
+            } else {
+                this.image.x += this.SPEED;
+            }
+        } else if (this.animState == "holding") {
+            this.image.x -= this.SPEED;
+            if (this.image.x < 500) {
+                this.setThrowing();
+                this.gameScene.sound.play("swoosh", { volume: 0.2 });
+                new Granite(this.gameScene, this.image.x, this.image.y).throw(
+                    -3.14 / 1.1 + Math.random() * 0.4,
+                    200
+                );
+            }
+        } else if (this.isThrowing()) {
+            this.throwTime++;
+            if (this.throwTime > 20) {
+                this.throwTime = 0;
+                this.setIdle();
+            }
         }
     }
 }
