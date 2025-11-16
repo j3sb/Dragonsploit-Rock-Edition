@@ -36,11 +36,11 @@ export default class TowerRoom extends Phaser.GameObjects.GameObject {
         this.myCastle = castle;
     }
 
-    public isEmpty(){
+    public isEmpty() {
         return this.roomType == "empty";
     }
 
-    public setThrower(){
+    public setThrower() {
         this.roomType = "thrower";
         this.myImage.setTexture("throwerroom");
         this.gameScene.addThrower("normal");
@@ -48,8 +48,11 @@ export default class TowerRoom extends Phaser.GameObjects.GameObject {
 
     onClick() {
         // handle this
-        if(this.isEmpty()){
-            this.setThrower();
+        if (this.isEmpty()) {
+            if (this.gameScene.getRocks() >= 10) {
+                this.gameScene.addRocks(-10);
+                this.setThrower();
+            }
         }
     }
 }

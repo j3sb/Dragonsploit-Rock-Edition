@@ -43,7 +43,7 @@ export class Game extends Scene {
         this.camera = this.cameras.main;
 
         this.throwers = [];
-        this.rocks = 1;
+        this.rocks = 11;
 
         this.background = this.add.image(512, 384, "main-bg");
         this.background.setDepth(0);

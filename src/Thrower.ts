@@ -1,5 +1,6 @@
 import Granite from "./rock-types/Granite.js";
 import { Game } from "./game/scenes/Game.js";
+import NormalRock from "./rock-types/NormalRock.js";
 
 export default class Thrower {
     private gameScene: Game;
@@ -50,7 +51,7 @@ export default class Thrower {
             if (this.image.x < 500) {
                 this.setThrowing();
                 this.gameScene.sound.play("swoosh", { volume: 0.2 });
-                new Granite(this.gameScene, this.image.x, this.image.y).throw(
+                new NormalRock(this.gameScene, this.image.x, this.image.y).throw(
                     -3.14 / 1.1 + Math.random() * 0.4,
                     200
                 );
