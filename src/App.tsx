@@ -50,18 +50,6 @@ function App() {
     return (
         <div id="app">
             <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
-            <div>
-                <div>
-                    <button className="button" onClick={changeScene}>
-                        Change Scene
-                    </button>
-                </div>
-                <div>
-                    <button className="button" onClick={addSprite}>
-                        Add New Sprite
-                    </button>
-                </div>
-            </div>
         </div>
     );
 }
