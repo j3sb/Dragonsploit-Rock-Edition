@@ -1,4 +1,3 @@
-import Granite from "./rock-types/Granite.js";
 import { Game } from "./game/scenes/Game.js";
 import NormalRock from "./rock-types/NormalRock.js";
 
@@ -40,9 +39,13 @@ export default class Thrower {
 
     update() {
         if (this.animState == "idle") {
-            console.log("updating thrower (b) " + this.animState + " " + this.image.x);
+            console.log(
+                "updating thrower (b) " + this.animState + " " + this.image.x
+            );
             this.image.x += this.SPEED;
-            console.log("updating thrower (a) " + this.animState + " " + this.image.x);
+            console.log(
+                "updating thrower (a) " + this.animState + " " + this.image.x
+            );
             if (this.image.x > 900) {
                 this.setHolding();
             }
@@ -51,10 +54,11 @@ export default class Thrower {
             if (this.image.x < 500) {
                 this.setThrowing();
                 this.gameScene.sound.play("swoosh", { volume: 0.2 });
-                new NormalRock(this.gameScene, this.image.x, this.image.y).throw(
-                    -3.14 / 1.1 + Math.random() * 0.4,
-                    200
-                );
+                new NormalRock(
+                    this.gameScene,
+                    this.image.x,
+                    this.image.y
+                ).throw(-3.14 / 1.1 + Math.random() * 0.4, 200);
             }
         } else if (this.isThrowing()) {
             this.throwTime++;
