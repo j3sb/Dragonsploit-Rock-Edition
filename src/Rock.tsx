@@ -25,7 +25,8 @@ export default abstract class Rock extends Phaser.GameObjects.GameObject {
         this.image.setBounce(0);
         // this.image.setCollideWorldBounds(true);
 
-        // scene.physics.add.collider(this.image, scene.dragon, () => { scene.dragon.damage() } );
+        scene.dragon.registerThrowingRock(this);
+
         // destroy stone when it hist the bottom platform to avoid too much lag
         scene.physics.add.collider(this.image, scene.platforms, () => {
             scene.addRocks(2);
@@ -40,7 +41,12 @@ export default abstract class Rock extends Phaser.GameObjects.GameObject {
         );
     }
 
+    public get collisionObject() {
+        return this.image;
+    }
+
     public abstract getEffectType(): EffectType;
     public abstract getDamage(): number;
     public abstract getDuration(): number;
 }
+

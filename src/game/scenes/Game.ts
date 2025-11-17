@@ -3,8 +3,9 @@ import { Scene } from "phaser";
 import Granite from "../../rock-types/Granite";
 import currency_update from "../../scale";
 import Castle from "../../Tower";
-import Dragon from "../../Dragon";
+import Dragon, { DragonHitLocation } from "../../Dragon";
 import Thrower from "../../Thrower";
+import TowerRoom from "../../TowerRoom";
 import { HPBar2 } from "../towerhitpoint";
 
 export class Game extends Scene {
@@ -70,7 +71,16 @@ export class Game extends Scene {
         // this.rock = new Granite(this, 1000, 600);
         // this.rock.throw(-3.14 / 1.5, 100);
 
-        this.dragon = new Dragon(this, 100, 440, 100);
+        this.dragon = new Dragon(this, 100, 400, 100);
+        this.dragon.setDragonHitCallback((hitLocation: DragonHitLocation) => {
+            this.dragon.damage(10000);
+            console.log("DRAGON HIT");
+        });
+        this.dragon.setFireballHitCallback((room: TowerRoom) => {
+            //// ???????????+
+            console.log("FIREBALL HIT");
+        });
+
         this.dollar_scale = new currency_update(this, 20);
 
         // this.physics.add.staticImage(-100, this.scale.gameSize.height - 100, "rock").setScale(1000, 1).refreshBody();
@@ -97,8 +107,15 @@ export class Game extends Scene {
         // this.rock.throw(-3.14 / 1.5 + Math.random() * 0.4, 100);
     }
 
+    //when the stone hits the dragon:
+    handle_hit() {
+        this.dollar_scale.gain_on_hit(); //player gains currency
+        this.dollar_scale.unlock_rooms_people(); //check if new rooms/people can be unlocked
+    }
+
     changeScene() {
         this.sound.stopByKey("game-music");
         this.scene.start("GameOver");
     }
 }
+
